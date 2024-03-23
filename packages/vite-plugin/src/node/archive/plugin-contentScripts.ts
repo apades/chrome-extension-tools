@@ -305,13 +305,13 @@ export const pluginContentScripts: CrxPluginFn = ({
 
             const source = this.meta.watchMode
               ? contentDevLoader
-                  .replace(/__PREAMBLE__/g, JSON.stringify(preambleName))
-                  .replace(/__CLIENT__/g, JSON.stringify(contentClientName))
-                  .replace(/__SCRIPT__/g, JSON.stringify(scriptName))
+                .replace(/__PREAMBLE__/g, JSON.stringify(preambleName))
+                .replace(/__CLIENT__/g, JSON.stringify(contentClientName))
+                .replace(/__SCRIPT__/g, JSON.stringify(scriptName))
               : contentProLoader.replace(
-                  /__SCRIPT__/g,
-                  JSON.stringify(scriptName),
-                )
+                /__SCRIPT__/g,
+                JSON.stringify(scriptName),
+              )
 
             const asset = bundle[loaderName]
             if (asset?.type === 'asset') asset.source = source
@@ -428,7 +428,7 @@ export const pluginContentScripts: CrxPluginFn = ({
 
             manifest.web_accessible_resources.push(war)
           } else {
-            const vmAsset = bundle['manifest.json'] as OutputAsset
+            const vmAsset = bundle['manifest.json' || '.vite/manifest.json'] as OutputAsset
             if (!vmAsset) throw new Error('vite manifest is missing')
             const viteManifest: Manifest = JSON.parse(vmAsset.source as string)
             debug('vite manifest %O', viteManifest)
@@ -484,7 +484,7 @@ export const pluginContentScripts: CrxPluginFn = ({
                 file,
               } = filesByName.get(name) ?? // lookup by output filename
               viteManifest[name] ?? // lookup by vite manifest import key
-              ({} as ManifestChunk) // if script is OutputAsset
+                ({} as ManifestChunk) // if script is OutputAsset
 
               const chunk = bundle[file]
               if (chunk?.type === 'chunk') {
@@ -652,10 +652,10 @@ export const pluginContentScripts: CrxPluginFn = ({
               const name = `content-script-loader.${parse(f).name}.js`
               const source = this.meta.watchMode
                 ? contentDevLoader
-                    .replace(/__PREAMBLE__/g, JSON.stringify(preambleName))
-                    .replace(/__CLIENT__/g, JSON.stringify(contentClientName)!)
-                    .replace(/__SCRIPT__/g, JSON.stringify(f))
-                    .replace(/__TIMESTAMP__/g, JSON.stringify(Date.now()))
+                  .replace(/__PREAMBLE__/g, JSON.stringify(preambleName))
+                  .replace(/__CLIENT__/g, JSON.stringify(contentClientName)!)
+                  .replace(/__SCRIPT__/g, JSON.stringify(f))
+                  .replace(/__TIMESTAMP__/g, JSON.stringify(Date.now()))
                 : contentProLoader.replace(/__SCRIPT__/g, JSON.stringify(f))
 
               const refId = this.emitFile({

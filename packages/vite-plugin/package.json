@@ -1,6 +1,6 @@
 {
-  "name": "@crxjs/vite-plugin",
-  "version": "2.0.0-beta.23",
+  "name": "@apad/vite-plugin",
+  "version": "2.0.1",
   "description": "Build Chrome Extensions with this Vite plugin.",
   "keywords": [
     "rollup-plugin",
@@ -13,6 +13,9 @@
     "browser",
     "browser-extension"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "homepage": "https://github.com/crxjs/rollup-plugin-chrome-extension",
   "bugs": {
     "url": "https://github.com/crxjs/rollup-plugin-chrome-extension/issues"
